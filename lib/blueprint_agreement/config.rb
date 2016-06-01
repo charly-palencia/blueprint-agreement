@@ -8,6 +8,10 @@ module BlueprintAgreement
       @port = port
     end
 
+    def server_path(path = './docs')
+      @server_path ||= path
+    end
+
     def port
       #default port so 8081
       @port || '8081'

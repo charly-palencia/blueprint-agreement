@@ -2,24 +2,6 @@ require 'net/http'
 
 module BlueprintAgreement
   module Utils
-    class EndpointNotFound < StandardError;
-      attr :request, :response
-
-      def initialize(request)
-        @request = request
-        @response = request.response
-      end
-
-      def message
-        %{
-          Response:
-          uri: #{response.uri}
-          code: #{response.code}
-          body: #{response.msg}
-        }
-      end
-    end
-
     class Requester
       REQUEST_OPTIONS = {
         "GET" => Net::HTTP::Get,
@@ -77,19 +59,19 @@ module BlueprintAgreement
       end
 
       def last_request
-        context.request.fullpath
+        @last_request ||= context.request.fullpath
       end
 
       def request_method
-        context.request.request_method
+        @request_method ||= context.request.request_method
       end
 
       def current_request
-        context.request
+        @current_request ||= context.request
       end
 
       def request_path
-        URI.join(server.host, context.request.fullpath)
+        @request_path ||= URI.join(server.host, context.request.fullpath)
       end
 
       attr :context, :server

@@ -1,3 +1,5 @@
+require 'json'
+
 module BlueprintAgreement
   module Utils
     def self.response_parser(response)

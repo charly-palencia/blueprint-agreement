@@ -3,10 +3,10 @@ module BlueprintAgreement
     class Server
       attr :pid, :port, :hostname, :root_path
 
-      def initialize(hostname = 'http://localhost',  root_path='./docs')
+      def initialize(hostname = 'http://localhost')
         @port = Config.port
         @hostname = hostname
-        @root_path = root_path
+        @root_path = Config.server_path
       end
 
       def start(path='*.apib')
