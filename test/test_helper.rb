@@ -1,6 +1,5 @@
 require 'bundler/setup'
 Bundler.setup
-require 'minitest/spec'
 require 'minitest/autorun'
 require 'minitest/unit'
 require 'mocha/mini_test'

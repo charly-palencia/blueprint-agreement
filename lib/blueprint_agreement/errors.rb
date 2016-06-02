@@ -4,7 +4,7 @@ module BlueprintAgreement
 
     def initialize(request)
       @request = request
-      @response = request.response
+      @response = request
     end
 
     def message

@@ -32,7 +32,7 @@ module BlueprintAgreement
 
             http.request(request).tap do |http_request|
               puts request_logger.print if ENV["AGREEMENT_LOUD"]
-              raise EndpointNotFound.new(http_request) if http_request.response.code == "404"
+              raise EndpointNotFound.new(http_request) if http_request.code == "404"
             end
           end
         rescue Errno::ECONNREFUSED
