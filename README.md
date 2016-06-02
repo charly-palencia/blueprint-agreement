@@ -35,7 +35,7 @@ require 'blueprint_agreement'
 
 ### Quick Start
 
-Blueprint agreement works with a markdown file with an valid API Blueprint format. Add your file into /docs folder in your root folder (or set your custom documentation folder)
+Blueprint agreement works based on a markdown file with an valid API Blueprint format. Add your file into `/docs` folder in your project root folder (or set your custom documentation folder)
 
 ./docs/test.md
 
@@ -58,7 +58,7 @@ FORMAT: 1A
 
 ```
 
-Then, test your documentation
+Then, test your documentation:
 
 ``` ruby 
 
