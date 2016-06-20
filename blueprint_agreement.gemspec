@@ -25,5 +25,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'byebug'
 
   spec.add_runtime_dependency("minitest", ["~> 5.8"])
-  spec.add_runtime_dependency("railties", ["~> 5.0.0.beta3"])
 end
