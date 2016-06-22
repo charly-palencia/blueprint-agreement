@@ -10,8 +10,8 @@ module BlueprintAgreement
         "DELETE" => Net::HTTP::Delete
       }
 
-      def initialize(context, server)
-        @context = context
+      def initialize(request, server)
+        @current_request = request
         @server = server
       end
 
@@ -54,27 +54,19 @@ module BlueprintAgreement
 
       def set_form_data(request)
         if ['POST', 'PUT'].include? request_method
-          request.body =  current_request.body.read
+          request.body = current_request.body.read
         end
       end
 
-      def last_request
-        @last_request ||= context.request.fullpath
-      end
-
       def request_method
-        @request_method ||= context.request.request_method
-      end
-
-      def current_request
-        @current_request ||= context.request
+        @request_method ||= current_request.request_method
       end
 
       def request_path
-        @request_path ||= URI.join(server.host, context.request.fullpath)
+        @request_path ||= URI.join(server.host, current_request.fullpath)
       end
 
-      attr :context, :server
+      attr_reader :current_request, :server
     end
   end
 end

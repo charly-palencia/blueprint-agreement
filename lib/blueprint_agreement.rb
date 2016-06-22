@@ -1,4 +1,4 @@
-gem "minitest"
+# gem "minitest"
 require "minitest"
 require "minitest"
 require "minitest/spec"
@@ -6,6 +6,7 @@ require "minitest/mock"
 require "blueprint_agreement/version"
 require 'blueprint_agreement/config'
 require 'blueprint_agreement/errors'
+require 'blueprint_agreement/utils/request'
 require 'blueprint_agreement/utils/request_logger'
 require 'blueprint_agreement/utils/server'
 require 'blueprint_agreement/utils/requester'
