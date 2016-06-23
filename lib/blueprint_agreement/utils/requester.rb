@@ -24,8 +24,7 @@ module BlueprintAgreement
 
             request_logger.for({
               body: current_request.body,
-              content_type: current_request.content_type,
-              authorization: current_request.authorization,
+              headers: current_request.headers,
               path: request_path,
               request_method: request_method
             })
@@ -48,13 +47,14 @@ module BlueprintAgreement
       end
 
       def set_headers(request)
-        request['Content-Type'] = current_request.content_type if current_request.has_content_type?
-        request['Authorization'] = current_request.authorization unless current_request.authorization.nil?
+        current_request.headers.each do |key, value|
+          request[key] = value
+        end
       end
 
       def set_form_data(request)
         if ['POST', 'PUT'].include? request_method
-          request.body = current_request.body.read
+          request.body = current_request.body
         end
       end
 
