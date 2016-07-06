@@ -39,6 +39,7 @@ module BlueprintAgreement
     end
 
     class RailsRequest < Request
+      HEADER_PATCH = {"CONTENT_TYPE" => "Content-Type", "HTTP_AUTHORIZATION" => "Authorization"}
 
       def body
         @body ||= request.body.read
@@ -57,7 +58,10 @@ module BlueprintAgreement
       end
 
       def headers
-        @context.headers
+        HEADER_PATCH.each_with_object({}) do  |header, result|
+          header_name, key = header
+          result[key] = @context.request.headers[header_name]
+        end.compact
       end
 
       def request
