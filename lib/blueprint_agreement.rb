@@ -1,4 +1,4 @@
-# gem "minitest"
+ # gem "minitest"
 require "minitest"
 require "minitest"
 require "minitest/spec"
@@ -6,9 +6,10 @@ require "minitest/mock"
 require "blueprint_agreement/version"
 require 'blueprint_agreement/config'
 require 'blueprint_agreement/errors'
+require 'blueprint_agreement/api_services/drakov_service'
+require "blueprint_agreement/server"
 require 'blueprint_agreement/utils/request'
 require 'blueprint_agreement/utils/request_logger'
-require 'blueprint_agreement/utils/server'
 require 'blueprint_agreement/utils/requester'
 require 'blueprint_agreement/utils/response_parser'
 require 'blueprint_agreement/minitest/assertions'

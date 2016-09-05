@@ -2,7 +2,11 @@ module Minitest
   module Assertions
     def assert_shall_agree_upon contract_name, response
       result    = BlueprintAgreement::Utils.response_parser(response.body)
-      server    = BlueprintAgreement::Utils::Server.new
+      api_service =  BlueprintAgreement::DrakovService.new
+      server    = BlueprintAgreement::Server.new(
+        api_service: api_service,
+        config: BlueprintAgreement::Config
+      )
 
       begin
         server.start(contract_name)
