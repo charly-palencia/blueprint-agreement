@@ -10,7 +10,7 @@ module Minitest
 
       begin
         server.start(contract_name)
-        request = BlueprintAgreement::Utils::Request.from(self)
+        request = BlueprintAgreement::RequestBuilder.for(self)
         requester = BlueprintAgreement::Utils::Requester.new(request, server)
         expected  = BlueprintAgreement::Utils.response_parser(requester.perform.body)
         assert_equal expected, result

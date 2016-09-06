@@ -1,4 +1,3 @@
-require 'singleton'
 module BlueprintAgreement
   class Server
 

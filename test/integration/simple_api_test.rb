@@ -14,6 +14,7 @@ describe "Rack Test" do
   let(:rack_test_session) {  RackTestSession.new }
 
   before do
+    module Rack; module Test; end; end
     BlueprintAgreement::Config.server_path('./test/fixtures')
   end
 

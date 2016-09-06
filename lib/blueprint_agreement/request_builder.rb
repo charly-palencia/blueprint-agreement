@@ -1,17 +1,22 @@
 module BlueprintAgreement
-  module Utils
-    class Request
-      def self.from(context)
-        klass = defined?(::Rails) ? RailsRequest : RackTestRequest
-        klass.new(context)
-      end
+  class RequestBuilder
+
+    def self.for(context)
+      klass = case
+              when defined?(Rack::Test)
+                RackTestRequest
+              when defined?(Rails)
+                RailsRequest
+              end
+
+      klass.new(context)
+    end
+
+    class RackTestRequest
 
       def initialize(context)
         @context = context
       end
-    end
-
-    class RackTestRequest < Request
 
       def body
         @body ||= request.body.read
@@ -38,8 +43,12 @@ module BlueprintAgreement
       end
     end
 
-    class RailsRequest < Request
+    class RailsRequest
       HEADER_PATCH = {"CONTENT_TYPE" => "Content-Type", "HTTP_AUTHORIZATION" => "Authorization"}
+
+      def initialize(context)
+        @context = context
+      end
 
       def body
         @body ||= request.body.read

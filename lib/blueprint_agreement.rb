@@ -8,7 +8,7 @@ require 'blueprint_agreement/config'
 require 'blueprint_agreement/errors'
 require 'blueprint_agreement/api_services/drakov_service'
 require "blueprint_agreement/server"
-require 'blueprint_agreement/utils/request'
+require 'blueprint_agreement/request_builder'
 require 'blueprint_agreement/utils/request_logger'
 require 'blueprint_agreement/utils/requester'
 require 'blueprint_agreement/utils/response_parser'
