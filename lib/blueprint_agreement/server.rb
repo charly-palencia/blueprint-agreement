@@ -8,7 +8,16 @@ module BlueprintAgreement
 
     def start(path=@config.default_format)
       @api_service.install unless @api_service.installed?
-      @api_service.start(path)
+
+      if @config.active_service
+        restart(path) if @config.active_service[:path] != path
+      else
+        @api_service.start(path)
+      end
+    end
+
+    def restart(path)
+      stop && @api_service.start(path)
     end
 
     def stop

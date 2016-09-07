@@ -44,3 +44,7 @@ module BlueprintAgreement
     config.port = '8082'
   end
 end
+
+Minitest.after_run do
+  Process.kill 'TERM', BlueprintAgreement::Config.active_service[:pid]
+end

@@ -14,8 +14,6 @@ module Minitest
         requester = BlueprintAgreement::Utils::Requester.new(request, server)
         expected  = BlueprintAgreement::Utils.response_parser(requester.perform.body)
         assert_equal expected, result
-      ensure
-        server.stop
       end
     end
   end

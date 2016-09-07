@@ -10,7 +10,8 @@ describe BlueprintAgreement::RequestBuilder do
 
     describe 'when rails is defined' do
       before do
-        Rails = true
+        described_class.stubs(:rails?).returns(true)
+        described_class.stubs(:rack_test?).returns(false)
       end
 
       it 'returns rails request instance' do
@@ -20,7 +21,8 @@ describe BlueprintAgreement::RequestBuilder do
 
     describe 'when rack-test is defined' do
       before do
-        module Rack; module Test; end; end
+        described_class.stubs(:rails?).returns(false)
+        described_class.stubs(:rack_test?).returns(true)
       end
 
       it 'returns a rack test request instance' do

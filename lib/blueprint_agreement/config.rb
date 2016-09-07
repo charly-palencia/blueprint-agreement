@@ -8,8 +8,20 @@ module BlueprintAgreement
       @port = port
     end
 
+    def active_service=(active_service)
+      @active_service = active_service
+    end
+
+    def active_service
+      @active_service if defined? @active_service
+    end
+
     def server_path(path = './docs')
       @server_path ||= path
+    end
+
+    def default_format
+      '*.apib'
     end
 
     def port

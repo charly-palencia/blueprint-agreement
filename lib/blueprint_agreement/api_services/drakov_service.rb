@@ -8,12 +8,14 @@ module BlueprintAgreement
       @root_path = Config.server_path
     end
 
-    def start(path='*.apib')
+    def start(path)
       @pid = spawn "drakov -f  #{root_path}/#{path} -p #{port} --header Authorization", options
+      Config.active_service = { pid: @pid, path: path }
     end
 
     def stop
-      Process.kill 'TERM', pid
+      Process.kill 'TERM', Config.active_service[:pid]
+      Config.active_service = nil
     end
 
     def host

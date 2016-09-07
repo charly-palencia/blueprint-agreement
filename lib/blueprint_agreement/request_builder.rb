@@ -3,13 +3,21 @@ module BlueprintAgreement
 
     def self.for(context)
       klass = case
-              when defined?(Rack::Test)
-                RackTestRequest
-              when defined?(Rails)
+              when rails?
                 RailsRequest
+              when rack_test?
+                RackTestRequest
               end
 
       klass.new(context)
+    end
+
+    def self.rails?
+      !!defined?(Rails)
+    end
+
+    def self.rack_test?
+      !!defined?(Rack::Test)
     end
 
     class RackTestRequest
