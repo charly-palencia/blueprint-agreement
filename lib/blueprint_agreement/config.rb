@@ -1,6 +1,7 @@
 module BlueprintAgreement
   module Config
     extend self
+    @@active_service = nil
 
     def configure; yield self end
 
@@ -8,12 +9,16 @@ module BlueprintAgreement
       @port = port
     end
 
+    def active_service?
+      !!@@active_service
+    end
+
     def active_service=(active_service)
-      @active_service = active_service
+      @@active_service = active_service
     end
 
     def active_service
-      @active_service if defined? @active_service
+      @@active_service
     end
 
     def server_path(path = './docs')

@@ -18,6 +18,12 @@ describe "Rack Test" do
     BlueprintAgreement::Config.server_path('./test/fixtures')
   end
 
+  describe 'when blueprint agreement was included but never used' do
+    it 'returns a valid api request' do
+      expect(true).must_equal(true)
+    end
+  end
+
   describe 'with valid request' do
     let(:endpoint){ '/message' }
     it 'returns a valid api request' do

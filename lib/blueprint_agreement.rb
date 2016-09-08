@@ -46,5 +46,7 @@ module BlueprintAgreement
 end
 
 Minitest.after_run do
-  Process.kill 'TERM', BlueprintAgreement::Config.active_service[:pid]
+  if BlueprintAgreement::Config.active_service?
+    Process.kill 'TERM', BlueprintAgreement::Config.active_service[:pid]
+  end
 end
