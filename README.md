@@ -1,5 +1,8 @@
 # Blueprint Agreement
 
+[![Build Status](https://travis-ci.org/charly-palencia/blueprint-agreement.svg?branch=master)](https://travis-ci.org/charly-palencia/blueprint-agreement)
+[![Code Climate](https://codeclimate.com/github/charly-palencia/blueprint-agreement/badges/gpa.svg)](https://codeclimate.com/github/charly-palencia/blueprint-agreement)
+
 A Minitest API Documentation Matcher based on ApiBluePrint schema.
 
 Note: This Gem Is Currently on Development. 
