@@ -72,7 +72,37 @@ describe Test do
   end
 end
 ```
+### Debug Mode
 
+use a env variable calls `AGREEMENT_LOUD`
+
+``` bash
+  $ AGREEMENT_LOUD=true rake test
+``` 
+
+Output:
+
+``` bash
+...Drakov server output...
+[DRAKOV] GET /message example
+
+          Method: GET
+          Path: http://localhost:8082/message
+
+          Details
+
+          Headers:
+
+           
+            Content-Type=application/json
+            Authorization=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.example
+
+          Body:
+          
+            {"param_1": "hi"}
+        
+
+```
 ### Config File 
 
 /config/initializer/blueprint_agreement.rb
