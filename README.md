@@ -108,8 +108,10 @@ Output:
 /config/initializer/blueprint_agreement.rb
 
 ``` ruby
-BlueprintAgreement::Config.port = '8081' #Default port for Drakov Server
-BlueprintAgreement::Config.server_path= './docs' #Default server path for Drakov Server
+  BlueprintAgreement::Config.configure do |config|
+    config.port = '8082'
+    config.server_path = '.'
+  end
 ```
 
 

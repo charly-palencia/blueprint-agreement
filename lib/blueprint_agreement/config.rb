@@ -9,6 +9,10 @@ module BlueprintAgreement
       @port = port
     end
 
+    def server_path=(server_path)
+      @server_path = server_path
+    end
+
     def active_service?
       !!@@active_service
     end
