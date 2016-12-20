@@ -21,11 +21,17 @@ API Blueprint** and as such you can **parse** it with the
 + [Next: Resource and Actions](02.%20Resource%20and%20Actions.md)
 
 # GET /message
-+ Request  200 (application/json)
++ Request  (application/json)
 + Response 200 (application/json)
     
     + Body
 
             {
-              'name': 'Hello World'
+              "name": "Hello World"
             }
+
+# POST /message/empty
++ Request  (application/json)
++ Response 204 (application/json)
+ 
+    + Body

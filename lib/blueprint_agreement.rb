@@ -12,6 +12,7 @@ require 'blueprint_agreement/request_builder'
 require 'blueprint_agreement/utils/request_logger'
 require 'blueprint_agreement/utils/requester'
 require 'blueprint_agreement/utils/response_parser'
+require 'blueprint_agreement/utils/exclude_filter'
 require 'blueprint_agreement/minitest/assertions'
 require 'blueprint_agreement/minitest/expectations'
 
