@@ -8,7 +8,7 @@ class RackTestSession
 end
 
 describe "Rack Test" do
-  let(:body) { "\n{\n  'name': 'Hello World'\n}\n" }
+  let(:body) { JSON.generate({name: 'Hello World' }) }
   let(:last_request) { RailsMocks::Request.new(fullpath: endpoint) }
   let(:last_response) { RailsMocks::Response.new(body: body, request: last_request) }
   let(:rack_test_session) {  RackTestSession.new }
@@ -35,6 +35,33 @@ describe "Rack Test" do
     let(:endpoint){ '/not_valid' }
     it 'returns a Not Found Route error' do
       expect { last_response.shall_agree_upon('hello_api.md') }.must_raise(BlueprintAgreement::EndpointNotFound)
+    end
+  end
+
+  describe 'with exclude_attributes' do
+    let(:body) { "\n{}\n" }
+    let(:endpoint){ '/message' }
+
+    before do
+      BlueprintAgreement::Config.exclude_attributes = ['name']
+    end
+
+    it 'returns a Not Found Route error' do
+     last_response.shall_agree_upon('hello_api.md')
+    end
+  end
+
+  describe 'with blank results' do
+    let(:body) { "" }
+    let(:endpoint){ '/message/empty' }
+    let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'POST') }
+
+    before do
+      BlueprintAgreement::Config.exclude_attributes = ['name']
+    end
+
+    it 'returns a Not Found Route error' do
+     last_response.shall_agree_upon('hello_api.md')
     end
   end
 end
