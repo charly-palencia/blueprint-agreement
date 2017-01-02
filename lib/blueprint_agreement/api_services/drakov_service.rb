@@ -9,7 +9,7 @@ module BlueprintAgreement
     end
 
     def start(path)
-      @pid = spawn "drakov -f  #{root_path}/#{path} -p #{port} --header Authorization", options
+      @pid = spawn "drakov -f  #{root_path}/#{path} -p #{port} --header Authorization --header Cookie", options
       Config.active_service = { pid: @pid, path: path }
     end
 

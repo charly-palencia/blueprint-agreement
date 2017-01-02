@@ -1,3 +1,5 @@
+require 'active_support/core_ext/hash/compact'
+
 module BlueprintAgreement
   class RequestBuilder
 
@@ -52,7 +54,12 @@ module BlueprintAgreement
     end
 
     class RailsRequest
-      HEADER_PATCH = {"CONTENT_TYPE" => "Content-Type", "HTTP_AUTHORIZATION" => "Authorization"}
+      HEADER_PATCH = {
+        "CONTENT_TYPE" => "Content-Type",
+        "HTTP_AUTHORIZATION" => "Authorization",
+        "rack.request.cookie_string" => "Cookie",
+        "HTTP_COOKIE" => "Cookie",
+      }
 
       def initialize(context)
         @context = context
@@ -75,9 +82,10 @@ module BlueprintAgreement
       end
 
       def headers
-        HEADER_PATCH.each_with_object({}) do  |header, result|
+        HEADER_PATCH.each_with_object({}) do |header, result|
           header_name, key = header
-          result[key] = @context.request.headers[header_name]
+          next unless @context.request.env.key?(header_name)
+          result[key] = @context.request.env[header_name]
         end.compact
       end
 
