@@ -1,5 +1,3 @@
- # gem "minitest"
-require "minitest"
 require "minitest"
 require "minitest/spec"
 require "minitest/mock"
@@ -41,9 +39,6 @@ require 'blueprint_agreement/minitest/expectations'
 #    +-+-+                     +--+--+                           +-+-+
 #
 module BlueprintAgreement
-  Config.configure do |config|
-    config.port = '8082'
-  end
 end
 
 Minitest.after_run do

@@ -1,15 +1,16 @@
 module BlueprintAgreement
   class DrakovService
-    attr :pid, :port, :hostname, :root_path
+    attr :pid, :port, :hostname, :root_path, :allow_headers
 
-    def initialize(hostname = 'http://localhost')
+    def initialize
       @port = Config.port
-      @hostname = hostname
+      @allow_headers = Config.allow_headers
+      @hostname = Config.hostname
       @root_path = Config.server_path
     end
 
     def start(path)
-      @pid = spawn "drakov -f  #{root_path}/#{path} -p #{port} --header Authorization --header Cookie", options
+      @pid = spawn "drakov -f #{root_path}/#{path} -p #{port} #{allow_headers}".strip, options
       Config.active_service = { pid: @pid, path: path }
     end
 
@@ -19,7 +20,7 @@ module BlueprintAgreement
     end
 
     def host
-      "http://localhost:#{port}"
+      "#{hostname}:#{port}"
     end
 
     def installed?

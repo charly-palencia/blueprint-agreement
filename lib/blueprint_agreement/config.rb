@@ -3,11 +3,14 @@ module BlueprintAgreement
     extend self
     @@active_service = nil
     @@exclude_attributes = nil
+    @@allow_headers = nil
+    @@port = "8082"
+    @@hostname = "http://localhost"
 
     def configure; yield self end
 
     def port=(port)
-      @port = port
+      @@port = port
     end
 
     def server_path=(server_path)
@@ -34,13 +37,28 @@ module BlueprintAgreement
       @server_path ||= path
     end
 
+    def allow_headers=(headers)
+      @@allow_headers = headers.map { |header| "--header #{header}" }.join(" ")
+    end
+
+    def allow_headers
+      @@allow_headers
+    end
+
     def default_format
       '*.apib'
     end
 
     def port
-      #default port so 8081
-      @port || '8081'
+      @@port
+    end
+
+    def hostname
+      @@hostname
+    end
+
+    def hostname=(host)
+      @@hostname = host
     end
 
     def exclude_attributes
