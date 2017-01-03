@@ -1,17 +1,44 @@
 require 'test_helper'
 require 'blueprint_agreement'
 
-class RackTestSession
-  def initialize
-    @headers = { "Content-Type" => "application/json" }
+describe "Rails" do
+  let(:body) { JSON.generate({cookie: 'have a cookie!' }) }
+  let(:env) do
+    {
+      'HTTP_COOKIE' => 'cookie=have-a-cookie',
+      'CONTENT_TYPE' => 'application/json'
+    }
+  end
+  let(:request) { RailsMocks::Request.new(fullpath: endpoint, env: env) }
+  let(:last_response) { RailsMocks::Response.new(body: body, request: request) }
+
+  before do
+    module Rails; end
+    BlueprintAgreement::Config.server_path('./test/fixtures')
+  end
+  after do
+    Object.send(:remove_const, :Rails)
+  end
+
+  describe 'cookies' do
+    let(:endpoint) { '/cookie' }
+    it 'returns a valid request' do
+      last_response.shall_agree_upon('hello_api.md')
+    end
   end
 end
 
 describe "Rack Test" do
+  class RackTestSession
+    def initialize
+      @headers = { "Content-Type" => "application/json" }
+    end
+  end
+
   let(:body) { JSON.generate({name: 'Hello World' }) }
   let(:last_request) { RailsMocks::Request.new(fullpath: endpoint) }
   let(:last_response) { RailsMocks::Response.new(body: body, request: last_request) }
-  let(:rack_test_session) {  RackTestSession.new }
+  let(:rack_test_session) { RackTestSession.new }
 
   before do
     module Rack; module Test; end; end

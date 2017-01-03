@@ -13,19 +13,16 @@ module BlueprintAgreement
       end
 
       def print
-        header_output =  @headers.to_a.map { |header| header.join("=") }.join("\n")
+        header_output =  @headers.to_a.map { |header| header.join(": ") }.join("\n")
         %{
-          Method: #{@request_method}
-          Path: #{@path}
+Method: #{@request_method}
+Path: #{@path}
 
-          Details
+Headers:
+#{ header_output }
 
-          Headers:
-
-          #{ header_output }
-
-          Body:
-          #{@body}
+Body:
+#{@body}
         }
       end
     end

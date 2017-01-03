@@ -35,3 +35,18 @@ API Blueprint** and as such you can **parse** it with the
 + Response 204 (application/json)
  
     + Body
+
+# GET /cookie
++ Request (application/json)
+  
+    + Headers
+
+            Cookie: cookie=have-a-cookie
+
++ Response 200 (application/json)
+  
+    + Body
+
+            {
+              "cookie": "have a cookie!"
+            }

@@ -5,7 +5,7 @@
 
 A Minitest API Documentation Matcher based on ApiBluePrint schema.
 
-Note: This Gem Is Currently on Development. 
+Note: This Gem Is Currently on Development.
 
 ## Description
 
@@ -63,7 +63,7 @@ FORMAT: 1A
 
 Then, test your documentation:
 
-``` ruby 
+```ruby
 
 describe Test do
   it 'has a valid response' do
@@ -78,32 +78,26 @@ use a env variable calls `AGREEMENT_LOUD`
 
 ``` bash
   $ AGREEMENT_LOUD=true rake test
-``` 
+```
 
 Output:
 
-``` bash
+```bash
 ...Drakov server output...
 [DRAKOV] GET /message example
 
-          Method: GET
-          Path: http://localhost:8082/message
+Method: GET
+Path: http://localhost:8082/message
 
-          Details
+Headers:
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.example
 
-          Headers:
-
-           
-            Content-Type=application/json
-            Authorization=Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.example
-
-          Body:
-          
-            {"param_1": "hi"}
-        
-
+Body:
+{"param_1": "hi"}
 ```
-### Config File 
+
+### Config File
 
 /config/initializer/blueprint_agreement.rb
 
