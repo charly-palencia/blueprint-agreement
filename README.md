@@ -72,11 +72,12 @@ describe Test do
   end
 end
 ```
+
 ### Debug Mode
 
-use a env variable calls `AGREEMENT_LOUD`
+use an env variable called `AGREEMENT_LOUD`
 
-``` bash
+```bash
   $ AGREEMENT_LOUD=true rake test
 ```
 
@@ -106,8 +107,15 @@ Body:
     config.port = '8082'
     config.server_path = '.'
     config.exlude_attributes = ['field_name']
+    config.allow_headers = ['Authorization', 'Cookie']
   end
 ```
+
+### Allow Headers
+
+This config option sets the `Access-Control-Allow-Headers` header.
+
+More info: https://github.com/Aconex/drakov#allow-headers-header
 
 ### Exclude attributes
 
