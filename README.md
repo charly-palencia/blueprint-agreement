@@ -68,7 +68,7 @@ Then, test your documentation:
 describe Test do
   it 'has a valid response' do
     get :index
-    response.shall_agree_with('test.md')
+    response.shall_agree_upon('test.md')
   end
 end
 ```
