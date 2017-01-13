@@ -106,7 +106,7 @@ Body:
   BlueprintAgreement::Config.configure do |config|
     config.port = '8082'
     config.server_path = '.'
-    config.exlude_attributes = ['field_name']
+    config.exclude_attributes = ['field_name']
     config.allow_headers = ['Authorization', 'Cookie']
   end
 ```
