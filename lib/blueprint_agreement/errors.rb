@@ -1,5 +1,6 @@
 module BlueprintAgreement
-  class EndpointNotFound < StandardError;
+  class MethodNotFound < StandardError; end
+  class EndpointNotFound < StandardError
     attr :request, :response
 
     def initialize(request)

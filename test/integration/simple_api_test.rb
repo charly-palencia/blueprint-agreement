@@ -78,6 +78,15 @@ describe "Rack Test" do
     end
   end
 
+  describe 'with exclude_attributes' do
+    let(:endpoint){ '/message/1' }
+    let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'PATCH') }
+
+    it 'validates PATCH method' do
+      last_response.shall_agree_upon('hello_api.md')
+    end
+  end
+
   describe 'with blank results' do
     let(:body) { "" }
     let(:endpoint){ '/message/empty' }

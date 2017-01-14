@@ -4,21 +4,27 @@ module BlueprintAgreement
   module Utils
     class Requester
       REQUEST_OPTIONS = {
-        "GET" => Net::HTTP::Get,
-        "POST" =>  Net::HTTP::Post,
-        "PUT" =>  Net::HTTP::Put,
-        "DELETE" => Net::HTTP::Delete
+        'GET' => Net::HTTP::Get,
+        'POST' =>  Net::HTTP::Post,
+        'PUT' =>  Net::HTTP::Put,
+        'DELETE' => Net::HTTP::Delete,
+        'PATCH' => Net::HTTP::Patch,
+        'TRACE' => Net::HTTP::Trace,
+        'OPTIONS' => Net::HTTP::Options,
       }
 
       def initialize(request, server)
         @current_request = request
+        @request_option = REQUEST_OPTIONS[request_method]
+        raise BlueprintAgreement::MethodNotFound if @request_option.nil?
+
         @server = server
       end
 
       def perform
         begin
           Net::HTTP.start(request_path.host, request_path.port) do |http|
-            request = REQUEST_OPTIONS[request_method].new request_path
+            request = @request_option.new request_path
             set_form_data(request)
             set_headers(request)
 
@@ -53,7 +59,7 @@ module BlueprintAgreement
       end
 
       def set_form_data(request)
-        if ['POST', 'PUT'].include? request_method
+        if ['POST', 'PUT', 'PATCH'].include? request_method
           request.body = current_request.body
         end
       end
