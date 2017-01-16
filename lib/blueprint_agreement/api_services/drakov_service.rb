@@ -29,7 +29,7 @@ module BlueprintAgreement
 
     def install
       print "installing drakov.."
-      pid = Process.spawn "sudo npm install -g drakov"
+      pid = Process.spawn "npm install -g drakov"
       Process.wait pid
       print "Drakov installed 🍺  "
     end
