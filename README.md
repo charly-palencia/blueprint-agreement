@@ -18,7 +18,7 @@ Note: This Gem Is Currently on Development.
 
 Add this line to your application's Gemfile:
 
-    gem 'blueprint-agreement'
+    gem 'blueprint_agreement'
 
 And then execute:
 
