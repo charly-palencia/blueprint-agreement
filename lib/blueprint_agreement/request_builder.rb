@@ -61,6 +61,15 @@ module BlueprintAgreement
         "HTTP_COOKIE" => "Cookie",
       }
 
+      DEFAULT_HEADERS =  %w[
+        HTTP_ACCEPT HTTP_ACCEPT_CHARSET HTTP_ACCEPT_ENCODING
+        HTTP_ACCEPT_LANGUAGE HTTP_CACHE_CONTROL HTTP_FROM
+        HTTP_NEGOTIATE HTTP_PRAGMA HTTP_CLIENT_IP
+        HTTP_X_FORWARDED_FOR HTTP_ORIGIN HTTP_VERSION
+        HTTP_X_CSRF_TOKEN HTTP_X_REQUEST_ID HTTP_X_FORWARDED_HOST
+        SERVER_ADDR
+        ].freeze
+
       def initialize(context)
         @context = context
       end
@@ -82,11 +91,21 @@ module BlueprintAgreement
       end
 
       def headers
-        HEADER_PATCH.each_with_object({}) do |header, result|
+        headers = {}
+
+        DEFAULT_HEADERS.each do |env|
+          next unless @context.request.env.key?(env)
+          key = env.sub(/^HTTP_/n, '').downcase
+          headers[key] = @context.request.env[env]
+        end
+
+        HEADER_PATCH.each do |header|
           header_name, key = header
           next unless @context.request.env.key?(header_name)
-          result[key] = @context.request.env[header_name]
-        end.compact
+          headers[key] = @context.request.env[header_name]
+        end
+
+        headers.compact
       end
 
       def request

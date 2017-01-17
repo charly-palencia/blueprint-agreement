@@ -26,6 +26,22 @@ describe "Rails" do
       last_response.shall_agree_upon('hello_api.md')
     end
   end
+
+  describe 'extra_headers' do
+    let(:env) do
+      {
+        'HTTP_COOKIE' => 'cookie=have-a-cookie',
+        'CONTENT_TYPE' => 'application/json',
+        'HTTP_ACCEPT' => 'application/json',
+        'HTTP_VERSION' => 'v1'
+      }
+    end
+
+    let(:endpoint) { '/extra_headers' }
+    it 'returns a valid request' do
+      last_response.shall_agree_upon('hello_api.md')
+    end
+  end
 end
 
 describe "Rack Test" do
