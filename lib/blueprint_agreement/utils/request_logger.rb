@@ -13,8 +13,8 @@ module BlueprintAgreement
       end
 
       def print
-        header_output =  @headers.to_a.map { |header| header.join(": ") }.join("\n")
-        %{
+        header_output = @headers.to_a.map { |header| header.join(": ") }.join("\n")
+        %(
 Method: #{@request_method}
 Path: #{@path}
 
@@ -23,7 +23,7 @@ Headers:
 
 Body:
 #{@body}
-        }
+        )
       end
     end
   end

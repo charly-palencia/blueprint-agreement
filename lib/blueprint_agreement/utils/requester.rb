@@ -22,28 +22,26 @@ module BlueprintAgreement
       end
 
       def perform
-        begin
-          Net::HTTP.start(request_path.host, request_path.port) do |http|
-            request = @request_option.new request_path
-            set_form_data(request)
-            set_headers(request)
+        Net::HTTP.start(request_path.host, request_path.port) do |http|
+          request = @request_option.new request_path
+          set_form_data(request)
+          set_headers(request)
 
-            request_logger.for({
-              body: current_request.body,
-              headers: current_request.headers,
-              path: request_path,
-              request_method: request_method
-            })
+          request_logger.for({
+            body: current_request.body,
+            headers: current_request.headers,
+            path: request_path,
+            request_method: request_method
+          })
 
-            http.request(request).tap do |http_request|
-              puts request_logger.print if ENV["AGREEMENT_LOUD"]
-              raise EndpointNotFound.new(http_request) if http_request.code == "404"
-            end
+          http.request(request).tap do |http_request|
+            puts request_logger.print if ENV["AGREEMENT_LOUD"]
+            raise EndpointNotFound.new(http_request) if http_request.code == "404"
           end
-        rescue Errno::ECONNREFUSED
-          sleep 1
-          perform
         end
+      rescue Errno::ECONNREFUSED
+        sleep 1
+        perform
       end
 
       private
@@ -59,7 +57,7 @@ module BlueprintAgreement
       end
 
       def set_form_data(request)
-        if ['POST', 'PUT', 'PATCH'].include? request_method
+        if %w(POST PUT PATCH).include? request_method
           request.body = current_request.body
         end
       end

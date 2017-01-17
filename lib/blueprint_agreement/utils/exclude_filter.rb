@@ -24,7 +24,7 @@ module BlueprintAgreement
         @exclude_attributes.flatten.each do |filter|
           case filter
           when Symbol, String
-            params.delete(filter) && params if params.has_key?(filter)
+            params.delete(filter) && params if params.key?(filter)
           when Hash then
             hash_filter(params, filter)
           end
@@ -39,7 +39,7 @@ module BlueprintAgreement
 
       params.slice(*filter.keys).each do |key, value|
         next unless value
-        next unless params.has_key? key
+        next unless params.key? key
 
         if value.is_a?(Array) || value.is_a?(Hash)
           params[key] = each_element(value) do |element|

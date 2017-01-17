@@ -1,18 +1,15 @@
 module Minitest
   module Assertions
     def assert_shall_agree_upon contract_name, response
-      result    = response.body
-      api_service =  BlueprintAgreement::DrakovService.new
-      server    = BlueprintAgreement::Server.new(
-        api_service: api_service,
-        config: BlueprintAgreement::Config
-      )
+      result = response.body
+      api_service = BlueprintAgreement::Config.api_service.new
+      server = BlueprintAgreement::Server.new(config: BlueprintAgreement::Config, api_service: api_service)
 
       begin
         server.start(contract_name)
         request = BlueprintAgreement::RequestBuilder.for(self)
         requester = BlueprintAgreement::Utils::Requester.new(request, server)
-        expected  = requester.perform.body.to_s
+        expected = requester.perform.body.to_s
 
         unless BlueprintAgreement::Config.exclude_attributes.nil?
           filters = BlueprintAgreement::Config.exclude_attributes

@@ -2,7 +2,6 @@ require 'active_support/core_ext/hash/compact'
 
 module BlueprintAgreement
   class RequestBuilder
-
     def self.for(context)
       klass = case
               when rails?

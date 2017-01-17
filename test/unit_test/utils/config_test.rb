@@ -30,4 +30,11 @@ describe BlueprintAgreement::Config do
       subject.hostname = 'http://localhost'
     end
   end
+
+  describe 'api_service' do
+    it 'sets the API service' do
+      subject.api_service = :drakov
+      subject.api_service.must_equal(BlueprintAgreement::APIServices::Drakov)
+    end
+  end
 end

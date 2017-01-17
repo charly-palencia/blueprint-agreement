@@ -1,11 +1,11 @@
 module BlueprintAgreement
   module Config
     extend self
-    @@active_service = nil
     @@exclude_attributes = nil
     @@allow_headers = nil
     @@port = "8082"
     @@hostname = "http://localhost"
+    @@api_service = APIServices::Drakov
 
     def configure; yield self end
 
@@ -21,16 +21,21 @@ module BlueprintAgreement
       @@exclude_attributes = exclude_attributes
     end
 
-    def active_service?
-      !!@@active_service
+    def api_service?
+      !!@@api_service
     end
 
-    def active_service=(active_service)
-      @@active_service = active_service
+    def api_service=(service)
+      @@api_service = case service
+                      when :drakov
+                        APIServices::Drakov
+                      else
+                        raise "Service #{service} not available"
+                      end
     end
 
-    def active_service
-      @@active_service
+    def api_service
+      @@api_service
     end
 
     def server_path(path = './docs')
@@ -66,4 +71,3 @@ module BlueprintAgreement
     end
   end
 end
-
