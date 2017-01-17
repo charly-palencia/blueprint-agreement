@@ -64,3 +64,20 @@ API Blueprint** and as such you can **parse** it with the
             {
               "cookie": "have a cookie!"
             }
+
+# GET /extra_headers
++ Request (application/json)
+
+    + Headers
+
+            Cookie: cookie=have-a-cookie
+            Accept: application/json
+            Version: v1
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+              "cookie": "have a cookie!"
+            }
