@@ -98,17 +98,19 @@ Body:
 {"param_1": "hi"}
 ```
 
-### Config File
+### Configuration
 
-/config/initializer/blueprint_agreement.rb
+`config/initializer/blueprint_agreement.rb`
 
-``` ruby
-  BlueprintAgreement::Config.configure do |config|
-    config.port = '8082'
-    config.server_path = '.'
-    config.exclude_attributes = ['field_name']
-    config.allow_headers = ['Authorization', 'Cookie']
-  end
+```ruby
+BlueprintAgreement.configure do |config|
+  config.port = '8082'
+  config.server_path = '.'
+  config.exclude_attributes = ['field_name']
+  config.allow_headers = ['Authorization', 'Cookie']
+end
+
+BlueprintAgreement.configuration.port = '8080'
 ```
 
 ### Allow Headers
@@ -123,12 +125,12 @@ This config option intents to exclude attributes when the match is perform. It o
 
 Examples:
 
-``` ruby
+```ruby
 # This excludes 'field_one' and the element 'sub_field_one' inside the 'field_two' array. It doesn't exclude 'field_two'.
-BlueprintAgreement::Config.exclude_attributes = ['field_one', field_two: [ 'sub_field_one' ]]
+BlueprintAgreement.configuration.exclude_attributes = ['field_one', field_two: [ 'sub_field_one' ]]
 
 # This excludes 'field_one' and 'sub_field_four'. It doesn't exclude 'field_two' or 'sub_field_one'.
-BlueprintAgreement::Config.exclude_attributes = ['field_one', field_two: { sub_field_one: [ 'sub_field_four' ] } ]
+BlueprintAgreement.configuration.exclude_attributes = ['field_one', field_two: { sub_field_one: [ 'sub_field_four' ] } ]
 ```
 
 ## Contributing

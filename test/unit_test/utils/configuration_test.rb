@@ -1,7 +1,7 @@
 require "test_helper"
 
-describe BlueprintAgreement::Config do
-  let(:subject) { BlueprintAgreement::Config }
+describe BlueprintAgreement::Configuration do
+  let(:subject) { BlueprintAgreement::Configuration.new }
 
   describe 'allow headers' do
     it 'allows setting the allowed headers' do
