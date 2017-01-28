@@ -43,6 +43,9 @@ module BlueprintAgreement
         rescue Errno::ECONNREFUSED
           sleep 1
           perform
+        rescue Errno::ECONNRESET
+          sleep 1
+          perform
         end
       end
 

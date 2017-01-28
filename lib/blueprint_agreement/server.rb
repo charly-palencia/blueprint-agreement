@@ -17,7 +17,8 @@ module BlueprintAgreement
     end
 
     def restart(path)
-      stop && @api_service.start(path)
+      stop
+      @api_service.start(path)
     end
 
     def stop

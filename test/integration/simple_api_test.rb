@@ -116,4 +116,14 @@ describe "Rack Test" do
      last_response.shall_agree_upon('hello_api.md')
     end
   end
+
+  describe 'with multiple apib files' do
+    let(:endpoint){ '/message/1' }
+    let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'PATCH') }
+
+    it 'returns a Not Found Route error' do
+     last_response.shall_agree_upon('hello_api.md')
+     last_response.shall_agree_upon('second_api.md')
+    end
+  end
 end
