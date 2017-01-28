@@ -126,4 +126,21 @@ describe "Rack Test" do
      last_response.shall_agree_upon('second_api.md')
     end
   end
+
+  describe 'support old configuration method' do
+    let(:body) { "" }
+    let(:endpoint){ '/message/empty' }
+    let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'POST') }
+
+    before do
+      BlueprintAgreement::Config.exclude_attributes = ['name']
+      BlueprintAgreement::Config.configure do |config|
+        config.exclude_attributes = ['name']
+      end
+    end
+
+    it 'returns a Not Found Route error' do
+     last_response.shall_agree_upon('hello_api.md')
+    end
+  end
 end

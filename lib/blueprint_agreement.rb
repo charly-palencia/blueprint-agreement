@@ -50,6 +50,23 @@ module BlueprintAgreement
       @configuration ||= Configuration.new
     end
   end
+
+  module Config
+    class << self
+      def configure(&block)
+        warn "[DEPRECATION] `BlueprintAgreement::Config` is deprecated.  Please use `BlueprintAgreement.configuration` instead."
+        BlueprintAgreement.configure(&block)
+      end
+
+      def method_missing(name, *args)
+        warn "[DEPRECATION] `BlueprintAgreement::Config` methods are  deprecated.  Please use `BlueprintAgreement.configuration` instead."
+        configuration = BlueprintAgreement.configuration;
+        return configuration.send(name) if name.to_s =~ /^(\w*)$/
+        return configuration.send(name, *args)  if name.to_s =~ /^(\w*)=$/
+        super
+      end
+    end
+  end
 end
 
 Minitest.after_run do
