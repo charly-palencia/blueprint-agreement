@@ -14,7 +14,7 @@ describe "Rails" do
 
   before do
     module Rails; end
-    BlueprintAgreement::Config.server_path('./test/fixtures')
+    BlueprintAgreement.configuration.server_path = './test/fixtures'
   end
   after do
     Object.send(:remove_const, :Rails)
@@ -58,7 +58,7 @@ describe "Rack Test" do
 
   before do
     module Rack; module Test; end; end
-    BlueprintAgreement::Config.server_path('./test/fixtures')
+    BlueprintAgreement.configuration.server_path = './test/fixtures'
   end
 
   describe 'when blueprint agreement was included but never used' do
@@ -86,7 +86,7 @@ describe "Rack Test" do
     let(:endpoint){ '/message' }
 
     before do
-      BlueprintAgreement::Config.exclude_attributes = ['name']
+      BlueprintAgreement.configuration.exclude_attributes = ['name']
     end
 
     it 'returns a Not Found Route error' do
@@ -109,7 +109,7 @@ describe "Rack Test" do
     let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'POST') }
 
     before do
-      BlueprintAgreement::Config.exclude_attributes = ['name']
+      BlueprintAgreement.configuration.exclude_attributes = ['name']
     end
 
     it 'returns a Not Found Route error' do

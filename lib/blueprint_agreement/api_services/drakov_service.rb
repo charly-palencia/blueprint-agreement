@@ -2,21 +2,22 @@ module BlueprintAgreement
   class DrakovService
     attr :pid, :port, :hostname, :root_path, :allow_headers
 
-    def initialize
-      @port = Config.port
-      @allow_headers = Config.allow_headers
-      @hostname = Config.hostname
-      @root_path = Config.server_path
+    def initialize(config = BlueprintAgreement.configuration)
+      @config = config
+      @port = @config.port
+      @allow_headers = @config.allow_headers
+      @hostname = @config.hostname
+      @root_path = @config.server_path
     end
 
     def start(path)
       @pid = spawn "drakov -f #{root_path}/#{path} -p #{port} #{allow_headers}".strip, options
-      Config.active_service = { pid: @pid, path: path }
+      @config.active_service = { pid: @pid, path: path }
     end
 
     def stop
-      Process.kill 'TERM', Config.active_service[:pid]
-      Config.active_service = nil
+      Process.kill 'TERM', @config.active_service[:pid]
+      @config.active_service = nil
     end
 
     def host
