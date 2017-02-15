@@ -1,8 +1,11 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'bundler/setup'
 Bundler.setup
+require "minitest"
 require 'minitest/autorun'
 require 'minitest/unit'
+require "minitest/spec"
+require "minitest/mock"
 require 'mocha/mini_test'
 
 ROOT_PATH = File.dirname(__FILE__)

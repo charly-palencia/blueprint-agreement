@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = BlueprintAgreement::VERSION
   spec.authors       = ["Charly Palencia"]
   spec.email         = ["charly.palencia@koombea.com"]
-  spec.summary       = %q{A Minitest API Documentation Matcher , based on ApiBluePrint schema.}
-  spec.description   = %q{A Minitest API Documentation Matcher , based on ApiBluePrint schema.}
+  spec.summary       = %q{A Minitest API Documentation Matcher, based on ApiBluePrint schema.}
+  spec.description   = %q{A Minitest API Documentation Matcher, based on ApiBluePrint schema.}
   spec.homepage      = "https://github.com/charly-palencia/blueprint-agreement"
   spec.license       = "MIT"
 

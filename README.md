@@ -105,7 +105,8 @@ Body:
 ```ruby
 BlueprintAgreement.configure do |config|
   config.port = '8082'
-  config.server_path = '.'
+  config.hostname = 'http://localhost'
+  config.root_path = '.'
   config.exclude_attributes = ['field_name']
   config.allow_headers = ['Authorization', 'Cookie']
 end

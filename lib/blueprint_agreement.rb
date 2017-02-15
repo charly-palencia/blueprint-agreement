@@ -1,9 +1,8 @@
-require "minitest"
-require "minitest/spec"
-require "minitest/mock"
-require "blueprint_agreement/version"
+require 'minitest'
+require 'blueprint_agreement/version'
 require 'blueprint_agreement/configuration'
 require 'blueprint_agreement/errors'
+require 'blueprint_agreement/services/drakov'
 require 'blueprint_agreement/api_services/drakov_service'
 require "blueprint_agreement/server"
 require 'blueprint_agreement/request_builder'
@@ -15,9 +14,9 @@ require 'blueprint_agreement/minitest/assertions'
 require 'blueprint_agreement/minitest/expectations'
 
 # ========================== BluePrintAgreement ==================================
-# +-----------+         +-------------------+              +-----------------+
-# | Minitest  |         | BlueprintAgreement|              |Node Environment |
-# +----+------+         +---------+---------+              +-----------------+
+# +-----------+         +--------------------+            +------------------+
+# | Minitest  |         | BlueprintAgreement |            | Node Environment |
+# +----+------+         +---------+----------+            +------------------+
 #      |                          |                                |
 #      |    shall_agree_with      |                                |
 #      +------------------------> |    /documentation_endpoint     |
@@ -37,7 +36,7 @@ require 'blueprint_agreement/minitest/expectations'
 #      |                          |                                |
 #      |                          |                                |
 #    +-+-+                     +--+--+                           +-+-+
-#
+
 module BlueprintAgreement
   class << self
     attr_writer :configuration
@@ -49,28 +48,16 @@ module BlueprintAgreement
     def configuration
       @configuration ||= Configuration.new
     end
-  end
 
-  module Config
-    class << self
-      def configure(&block)
-        warn "[DEPRECATION] `BlueprintAgreement::Config` is deprecated.  Please use `BlueprintAgreement.configuration` instead."
-        BlueprintAgreement.configure(&block)
-      end
+    def service=(service)
+      @service = BlueprintAgreement::Services.const_get(service.to_s.capitalize).new
+    end
 
-      def method_missing(name, *args)
-        warn "[DEPRECATION] `BlueprintAgreement::Config` methods are  deprecated.  Please use `BlueprintAgreement.configuration` instead."
-        configuration = BlueprintAgreement.configuration;
-        return configuration.send(name) if name.to_s =~ /^(\w*)$/
-        return configuration.send(name, *args)  if name.to_s =~ /^(\w*)=$/
-        super
-      end
+    def service
+      return @service if @service
+      self.service = configuration.service
     end
   end
 end
 
-Minitest.after_run do
-  if BlueprintAgreement.configuration.active_service?
-    Process.kill 'TERM', BlueprintAgreement.configuration.active_service[:pid]
-  end
-end
+Minitest.after_run { BlueprintAgreement.service.stop }

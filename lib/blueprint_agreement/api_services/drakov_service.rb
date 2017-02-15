@@ -7,7 +7,7 @@ module BlueprintAgreement
       @port = @config.port
       @allow_headers = @config.allow_headers
       @hostname = @config.hostname
-      @root_path = @config.server_path
+      @root_path = @config.root_path
     end
 
     def start(path)

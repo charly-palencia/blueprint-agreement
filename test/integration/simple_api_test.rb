@@ -14,7 +14,7 @@ describe "Rails" do
 
   before do
     module Rails; end
-    BlueprintAgreement.configuration.server_path = './test/fixtures'
+    BlueprintAgreement.configuration.root_path = './test/fixtures'
   end
   after do
     Object.send(:remove_const, :Rails)
@@ -58,7 +58,7 @@ describe "Rack Test" do
 
   before do
     module Rack; module Test; end; end
-    BlueprintAgreement.configuration.server_path = './test/fixtures'
+    BlueprintAgreement.configuration.root_path = './test/fixtures'
   end
 
   describe 'when blueprint agreement was included but never used' do
