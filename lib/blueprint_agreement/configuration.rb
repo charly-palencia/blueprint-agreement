@@ -1,11 +1,12 @@
 module BlueprintAgreement
   class Configuration
+    attr_reader :allow_headers
     attr_accessor :active_service,
       :exclude_attributes,
-      :allow_headers,
       :port,
       :hostname,
-      :server_path
+      :server_path,
+      :request_headers
 
     def initialize
       @active_service = nil
@@ -13,7 +14,8 @@ module BlueprintAgreement
       @allow_headers = nil
       @port = "8082"
       @hostname = "http://localhost"
-      @server_path = './docs'
+      @server_path = "./docs"
+      @request_headers = ["Content-Type", "Authorization", "Cookie"]
     end
 
     def active_service?

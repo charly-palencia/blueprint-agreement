@@ -28,6 +28,14 @@ describe "Rails" do
   end
 
   describe 'extra_headers' do
+    before do
+      BlueprintAgreement.configuration.request_headers = ['Cookie', 'Content-Type', 'Accept', 'Version']
+    end
+
+    after do
+      BlueprintAgreement.configuration.request_headers = ["Content-Type", "Authorization", "Cookie"]
+    end
+
     let(:env) do
       {
         'HTTP_COOKIE' => 'cookie=have-a-cookie',
@@ -36,8 +44,8 @@ describe "Rails" do
         'HTTP_VERSION' => 'v1'
       }
     end
-
     let(:endpoint) { '/extra_headers' }
+
     it 'returns a valid request' do
       last_response.shall_agree_upon('hello_api.md')
     end
@@ -133,9 +141,8 @@ describe "Rack Test" do
     let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'POST') }
 
     before do
-      BlueprintAgreement::Config.exclude_attributes = ['name']
-      BlueprintAgreement::Config.configure do |config|
-        config.exclude_attributes = ['name']
+      BlueprintAgreement.configure do |c|
+        c.exclude_attributes = ['name']
       end
     end
 
