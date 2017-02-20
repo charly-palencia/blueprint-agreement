@@ -77,7 +77,7 @@ describe "Rack Test" do
   describe 'with invalid request' do
     let(:endpoint){ '/not_valid' }
     it 'returns a Not Found Route error' do
-      expect { last_response.shall_agree_upon('hello_api.md') }.must_raise(BlueprintAgreement::EndpointNotFound)
+      expect { last_response.shall_agree_upon('hello_api.md') }.must_raise(BlueprintAgreement::EndpointNotFoundError)
     end
   end
 
@@ -133,8 +133,8 @@ describe "Rack Test" do
     let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'POST') }
 
     before do
-      BlueprintAgreement::Config.exclude_attributes = ['name']
-      BlueprintAgreement::Config.configure do |config|
+      BlueprintAgreement.configuration.exclude_attributes = ['name']
+      BlueprintAgreement.configure do |config|
         config.exclude_attributes = ['name']
       end
     end

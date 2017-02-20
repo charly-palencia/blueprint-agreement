@@ -12,7 +12,7 @@ module BlueprintAgreement
       @allow_headers = nil
       @port = "8082"
       @hostname = "http://localhost"
-      @root_path = '.'
+      @root_path = "."
       @service = :drakov
     end
 

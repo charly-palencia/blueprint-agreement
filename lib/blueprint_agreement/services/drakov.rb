@@ -17,7 +17,7 @@ module BlueprintAgreement
         @pid = Process.spawn "#{PACKAGE} -f #{@config.root_path}/#{@contract} -p #{@config.port} #{@config.allow_headers}".strip, start_options
       end
 
-      def runnning?
+      def running?
         !stopped?
       end
 

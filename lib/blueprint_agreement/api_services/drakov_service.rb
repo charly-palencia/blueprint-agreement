@@ -12,7 +12,7 @@ module BlueprintAgreement
 
     def start(path)
       @pid = spawn "drakov -f #{root_path}/#{path} -p #{port} #{allow_headers}".strip, options
-      @config.active_service = { pid: @pid, path: path }
+      # @config.active_service = { pid: @pid, path: path }
     end
 
     def stop
