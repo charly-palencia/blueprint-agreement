@@ -19,11 +19,11 @@ module BlueprintAgreement
     def initialize(request)
       @config = BlueprintAgreement.configuration
       @current_request = request
-      @request_method = request.request_method
+      @request_method = @current_request.request_method
       fullhost = "#{@config.hostname}:#{@config.port}"
       @request_path = URI.join(fullhost, @current_request.fullpath)
       @request_option = REQUEST_OPTIONS[@request_method]
-      raise BlueprintAgreement::MethodNotFoundError if @request_option.nil?
+      raise BlueprintAgreement::HttpMethodNotFoundError if @request_option.nil?
     end
 
     def perform

@@ -3,7 +3,6 @@ require 'active_support/core_ext/array/wrap'
 require 'active_support/core_ext/hash/slice'
 require 'active_support/core_ext/object/blank'
 
-
 module BlueprintAgreement
   class ExcludeFilter
     class << self

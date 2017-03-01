@@ -1,5 +1,5 @@
 require 'test_helper'
-require './lib/blueprint_agreement/request_builder'
+require 'blueprint_agreement/request_builder'
 
 describe BlueprintAgreement::RequestBuilder do
   let(:described_class) { BlueprintAgreement::RequestBuilder }

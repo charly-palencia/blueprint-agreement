@@ -10,17 +10,17 @@ require 'blueprint_agreement/rack_test_request'
 require 'blueprint_agreement/request_builder'
 require 'blueprint_agreement/utils/request_logger'
 require 'blueprint_agreement/requester'
-require 'blueprint_agreement/utils/response_parser'
-require 'blueprint_agreement/utils/exclude_filter'
+require 'blueprint_agreement/response_parser'
+require 'blueprint_agreement/exclude_filter'
 require 'blueprint_agreement/minitest/assertions'
 require 'blueprint_agreement/minitest/expectations'
 
-# ========================== BluePrintAgreement ==================================
-# +-----------+         +--------------------+            +------------------+
-# | Minitest  |         | BlueprintAgreement |            | Node Environment |
-# +----+------+         +---------+----------+            +------------------+
+# ========================== BlueprintAgreement ==================================
+# +------------+        +--------------------+            +------------------+
+# |  Minitest  |        | BlueprintAgreement |            | Node Environment |
+# +----+-------+        +---------+----------+            +------------------+
 #      |                          |                                |
-#      |    shall_agree_with      |                                |
+#      |    shall_agree_upon      |                                |
 #      +------------------------> |    /documentation_endpoint     |
 #      |                          +------------------------------> |
 #      |                          |                                |
@@ -31,10 +31,6 @@ require 'blueprint_agreement/minitest/expectations'
 #      |                          |                                |
 #      |       assert_equal       |                                |
 #      | <------------------------+                                |
-#      |                          |                                |
-#      |                          |                                |
-#      |                          |                                |
-#      |                          |                                |
 #      |                          |                                |
 #      |                          |                                |
 #    +-+-+                     +--+--+                           +-+-+
@@ -60,6 +56,7 @@ module BlueprintAgreement
     def service
       return @service if @service
       self.service = configuration.service
+      @service
     end
   end
 end

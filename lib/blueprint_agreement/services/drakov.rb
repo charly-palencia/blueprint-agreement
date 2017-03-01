@@ -26,7 +26,8 @@ module BlueprintAgreement
       end
 
       def stop
-        Process.kill 'TERM', @pid
+        return unless running?
+        Process.kill "TERM", @pid
         @contract = nil
         @pid = nil
       end
@@ -46,7 +47,7 @@ module BlueprintAgreement
 
       def start_options
         {}.tap do |hsh|
-          hsh[:out] = '/dev/null' unless ENV['AGREEMENT_LOUD']
+          hsh[:out] = "/dev/null" unless ENV["AGREEMENT_LOUD"]
         end
       end
     end

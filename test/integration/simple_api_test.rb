@@ -9,8 +9,8 @@ describe "Rails" do
       'CONTENT_TYPE' => 'application/json'
     }
   end
-  let(:request) { RailsMocks::Request.new(fullpath: endpoint, env: env) }
-  let(:last_response) { RailsMocks::Response.new(body: body, request: request) }
+  let(:request) { TestRequest.new(fullpath: endpoint, env: env) }
+  let(:last_response) { TestResponse.new(body: body, request: request) }
 
   before do
     module Rails; end
@@ -52,8 +52,8 @@ describe "Rack Test" do
   end
 
   let(:body) { JSON.generate({name: 'Hello World' }) }
-  let(:last_request) { RailsMocks::Request.new(fullpath: endpoint) }
-  let(:last_response) { RailsMocks::Response.new(body: body, request: last_request) }
+  let(:last_request) { TestRequest.new(fullpath: endpoint) }
+  let(:last_response) { TestResponse.new(body: body, request: last_request) }
   let(:rack_test_session) { RackTestSession.new }
 
   before do
@@ -89,6 +89,10 @@ describe "Rack Test" do
       BlueprintAgreement.configuration.exclude_attributes = ['name']
     end
 
+    after do
+      BlueprintAgreement.configuration.exclude_attributes = nil
+    end
+
     it 'returns a Not Found Route error' do
      last_response.shall_agree_upon('hello_api.md')
     end
@@ -96,7 +100,7 @@ describe "Rack Test" do
 
   describe 'with exclude_attributes' do
     let(:endpoint){ '/message/1' }
-    let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'PATCH') }
+    let(:last_request) { TestRequest.new(fullpath: endpoint, request_method: 'PATCH') }
 
     it 'validates PATCH method' do
       last_response.shall_agree_upon('hello_api.md')
@@ -106,7 +110,7 @@ describe "Rack Test" do
   describe 'with blank results' do
     let(:body) { "" }
     let(:endpoint){ '/message/empty' }
-    let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'POST') }
+    let(:last_request) { TestRequest.new(fullpath: endpoint, request_method: 'POST') }
 
     before do
       BlueprintAgreement.configuration.exclude_attributes = ['name']
@@ -119,7 +123,7 @@ describe "Rack Test" do
 
   describe 'with multiple apib files' do
     let(:endpoint){ '/message/1' }
-    let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'PATCH') }
+    let(:last_request) { TestRequest.new(fullpath: endpoint, request_method: 'PATCH') }
 
     it 'returns a Not Found Route error' do
      last_response.shall_agree_upon('hello_api.md')
@@ -130,13 +134,15 @@ describe "Rack Test" do
   describe 'support old configuration method' do
     let(:body) { "" }
     let(:endpoint){ '/message/empty' }
-    let(:last_request) { RailsMocks::Request.new(fullpath: endpoint, request_method: 'POST') }
+    let(:last_request) { TestRequest.new(fullpath: endpoint, request_method: 'POST') }
 
     before do
-      BlueprintAgreement.configuration.exclude_attributes = ['name']
       BlueprintAgreement.configure do |config|
         config.exclude_attributes = ['name']
       end
+    end
+    after do
+      BlueprintAgreement.configuration.exclude_attributes = nil
     end
 
     it 'returns a Not Found Route error' do

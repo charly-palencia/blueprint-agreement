@@ -1,7 +1,7 @@
 require 'json'
 
 module BlueprintAgreement
-  module Utils
+  module ResponseParser
     extend self
 
     def to_json(content)
@@ -12,8 +12,8 @@ module BlueprintAgreement
       return content.to_s.lstrip
     end
 
-    def response_parser(response)
-      return content if response.nil?
+    def prettify_json(response)
+      return response if response.nil?
 
       response = JSON.parse(response) if response.is_a? String
       JSON.pretty_generate(response)

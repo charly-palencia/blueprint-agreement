@@ -1,39 +1,28 @@
 module Minitest
   module Assertions
-    def assert_shall_agree_upon(contract_name, response)
+    def assert_shall_agree_upon(contract_name, test_response)
       BlueprintAgreement.service.start(contract_name)
       request = BlueprintAgreement::RequestBuilder.for(self)
       requester = BlueprintAgreement::Requester.new(request)
-      requester.perform
+      contract_response = requester.perform
+      contract_response_body = contract_response.body.to_s
+      test_response_body = test_response.body
 
-      # OK
-      api_service = BlueprintAgreement::DrakovService.new(BlueprintAgreement.configuration)
-      server      = BlueprintAgreement::Server.new(
-        api_service: api_service,
-        config: BlueprintAgreement.configuration
-      )
+      unless BlueprintAgreement.configuration.exclude_attributes.nil?
+        filters = BlueprintAgreement.configuration.exclude_attributes
+        contract_response_body = BlueprintAgreement::ExcludeFilter.deep_exclude(
+          BlueprintAgreement::ResponseParser.to_json(contract_response_body),
+          filters
+        )
+        test_response_body = BlueprintAgreement::ExcludeFilter.deep_exclude(
+          BlueprintAgreement::ResponseParser.to_json(test_response_body),
+          filters
+        )
+      end
+      contract_response_body = BlueprintAgreement::ResponseParser.prettify_json(contract_response_body)
+      test_response_body = BlueprintAgreement::ResponseParser.prettify_json(test_response_body)
 
-      # begin
-      #   server.start(contract_name)
-      #   request = BlueprintAgreement::RequestBuilder.for(self)
-      #   requester = BlueprintAgreement::Utils::Requester.new(request, server)
-      #   expected  = requester.perform.body.to_s
-
-      #   unless BlueprintAgreement.configuration.exclude_attributes.nil?
-      #     filters = BlueprintAgreement.configuration.exclude_attributes
-      #     result = BlueprintAgreement::ExcludeFilter.deep_exclude(
-      #       BlueprintAgreement::Utils.to_json(result),
-      #       filters)
-      #     expected = BlueprintAgreement::ExcludeFilter.deep_exclude(
-      #       BlueprintAgreement::Utils.to_json(expected),
-      #       filters)
-      #   end
-
-      #   result = BlueprintAgreement::Utils.response_parser(response.body)
-      #   expected = BlueprintAgreement::Utils.response_parser(expected)
-
-      #   assert_equal expected, result
-      # end
+      assert_equal test_response_body, contract_response_body
     end
   end
 end

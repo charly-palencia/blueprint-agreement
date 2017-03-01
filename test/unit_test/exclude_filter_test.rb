@@ -1,6 +1,6 @@
 require 'test_helper'
 require 'json'
-require 'blueprint_agreement/utils/exclude_filter'
+require 'blueprint_agreement/exclude_filter'
 
 describe BlueprintAgreement::ExcludeFilter do
   let(:described_module) { BlueprintAgreement::ExcludeFilter }
