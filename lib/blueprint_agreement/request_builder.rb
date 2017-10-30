@@ -54,22 +54,6 @@ module BlueprintAgreement
     end
 
     class RailsRequest
-      HEADER_PATCH = {
-        "CONTENT_TYPE" => "Content-Type",
-        "HTTP_AUTHORIZATION" => "Authorization",
-        "rack.request.cookie_string" => "Cookie",
-        "HTTP_COOKIE" => "Cookie",
-      }
-
-      DEFAULT_HEADERS =  %w[
-        HTTP_ACCEPT HTTP_ACCEPT_CHARSET HTTP_ACCEPT_ENCODING
-        HTTP_ACCEPT_LANGUAGE HTTP_CACHE_CONTROL HTTP_FROM
-        HTTP_NEGOTIATE HTTP_PRAGMA HTTP_CLIENT_IP
-        HTTP_X_FORWARDED_FOR HTTP_ORIGIN HTTP_VERSION
-        HTTP_X_CSRF_TOKEN HTTP_X_REQUEST_ID HTTP_X_FORWARDED_HOST
-        SERVER_ADDR
-        ].freeze
-
       def initialize(context)
         @context = context
       end
@@ -91,21 +75,22 @@ module BlueprintAgreement
       end
 
       def headers
-        headers = {}
-
-        DEFAULT_HEADERS.each do |env|
-          next unless @context.request.env.key?(env)
-          key = env.sub(/^HTTP_/n, '').downcase
-          headers[key] = @context.request.env[env]
-        end
-
-        HEADER_PATCH.each do |header|
-          header_name, key = header
-          next unless @context.request.env.key?(header_name)
-          headers[key] = @context.request.env[header_name]
-        end
-
-        headers.compact
+        request_headers = BlueprintAgreement.configuration.request_headers
+        request_headers.each_with_object({}) do |header, result|
+          if @context.request.env.key?(header)
+            result[header] = @context.request.env[header]
+            next
+          end
+          uppercased_header = header.upcase.tr("-", "_")
+          if @context.request.env.key?(uppercased_header)
+            result[header] = @context.request.env[uppercased_header]
+            next
+          end
+          http_prefixed_header = "HTTP_#{uppercased_header}"
+          if @context.request.env.key?(http_prefixed_header)
+            result[header] = @context.request.env[http_prefixed_header]
+          end
+        end.compact
       end
 
       def request

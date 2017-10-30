@@ -100,7 +100,7 @@ Body:
 
 ### Configuration
 
-`config/initializer/blueprint_agreement.rb`
+`test/support/blueprint_agreement.rb`
 
 ```ruby
 BlueprintAgreement.configure do |config|
@@ -108,9 +108,12 @@ BlueprintAgreement.configure do |config|
   config.server_path = '.'
   config.exclude_attributes = ['field_name']
   config.allow_headers = ['Authorization', 'Cookie']
+  config.request_headers = ['Authorization', 'Content-Type', 'Cookie']
 end
 
+# or
 BlueprintAgreement.configuration.port = '8080'
+BlueprintAgreement.configuration.server_path = '.'
 ```
 
 ### Allow Headers
@@ -131,6 +134,17 @@ BlueprintAgreement.configuration.exclude_attributes = ['field_one', field_two: [
 
 # This excludes 'field_one' and 'sub_field_four'. It doesn't exclude 'field_two' or 'sub_field_one'.
 BlueprintAgreement.configuration.exclude_attributes = ['field_one', field_two: { sub_field_one: [ 'sub_field_four' ] } ]
+```
+
+### Request Headers
+
+This option accepts an array allowing you to specify which headers should be sent to drakov when running tests.
+You should use this option if you are using any custom headers, `Accept-Version` or `Api-Token` are examples of custom headers.
+
+The default value is:
+
+```ruby
+[ "Content-Type", "Authorization", "Cookie" ]
 ```
 
 ## Contributing
