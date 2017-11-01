@@ -20,14 +20,39 @@ API Blueprint** and as such you can **parse** it with the
 + [This: Raw API Blueprint](https://raw.github.com/apiaryio/api-blueprint/master/examples/01.%20Simplest%20API.md)
 + [Next: Resource and Actions](02.%20Resource%20and%20Actions.md)
 
-# GET /message
-+ Request  (application/json)
+### Message [/message]
+
+#### Valid response [GET]
+
++ Request
+
+    + Headers
+
+        Accept: application/json
+
 + Response 200 (application/json)
-    
+
     + Body
 
             {
               "name": "Hello World"
+            }
+
+#### Not found response [GET]
+
++ Request
+
+    + Headers
+
+          Accept: application/json
+          Prefer: status=404
+
++ Response 404 (application/json)
+
+    + Body
+
+            {
+              "error": "Not found message"
             }
 
 # POST /message/empty

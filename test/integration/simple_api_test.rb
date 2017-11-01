@@ -54,8 +54,8 @@ end
 
 describe "Rack Test" do
   class RackTestSession
-    def initialize
-      @headers = { "Content-Type" => "application/json" }
+    def initialize(headers = { "Content-Type" => "application/json" })
+      @headers = headers
     end
   end
 
@@ -77,6 +77,26 @@ describe "Rack Test" do
 
   describe 'with valid request' do
     let(:endpoint){ '/message' }
+    let(:rack_test_session) { RackTestSession.new(
+      {
+        "Accept": "application/json"
+      }
+    )}
+    it 'returns a valid api request' do
+      last_response.shall_agree_upon('hello_api.md')
+    end
+  end
+
+  describe "with an expected 404 response" do
+    let(:endpoint){ '/message' }
+    let(:body) { JSON.generate({error: 'Not found message' }) }
+
+    let(:rack_test_session) { RackTestSession.new(
+      {
+        "Prefer": "status=404",
+        "Accept": "application/json"
+      }
+    )}
     it 'returns a valid api request' do
       last_response.shall_agree_upon('hello_api.md')
     end
@@ -92,7 +112,11 @@ describe "Rack Test" do
   describe 'with exclude_attributes' do
     let(:body) { "\n{}\n" }
     let(:endpoint){ '/message' }
-
+    let(:rack_test_session) { RackTestSession.new(
+      {
+        "Accept": "application/json"
+      }
+    )}
     before do
       BlueprintAgreement.configuration.exclude_attributes = ['name']
     end
